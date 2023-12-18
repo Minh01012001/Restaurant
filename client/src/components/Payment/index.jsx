@@ -3,6 +3,7 @@ import React from 'react'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useNavigate } from 'react-router-dom';
 
 const Detail = ({ name, price }) => {
   return <Stack direction="row" justifyContent="space-between" px={2} my={1}>
@@ -22,6 +23,8 @@ const PaymentPage = () => {
     name: 'Item 2',
     price: 0
   }]
+
+  const route = useNavigate()
 
   return (
     <Container maxWidth="sm" >
@@ -54,7 +57,7 @@ const PaymentPage = () => {
               <FormControlLabel value="master card" control={<Radio />} label="Master card" />
 
             </RadioGroup>
-            <Button variant='contained' >Confirm</Button>
+            <Button variant='contained' onClick={() => route("/seating")} >Confirm</Button>
           </Grid>
         </Grid>
       </Card>
