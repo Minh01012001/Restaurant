@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import logo from "../img/logo.png";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 
 const Header = () => {
+  const { _id } = useParams();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -31,7 +33,7 @@ const Header = () => {
             <Link className="btn btn-dark" to="/menu">
               Menu
             </Link>
-            <Link className="btn btn-dark" to="/cart">
+            <Link className="btn btn-dark" to={`/cart/${_id}`}>
               <Badge badgeContent={0} color="primary">
                 <ShoppingCartIcon />
               </Badge>

@@ -23,23 +23,134 @@ function App() {
       <Helmet>
         <title>CMC Restaurant</title>
       </Helmet>
-      <Header />
 
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/menu/:_id/edit" element={<Editingitem />} />
-        <Route path="/menu/add" element={<Addingitem />} />
-        <Route path="/menu/:_id/delete" element={<Deletingitem />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/:_id" element={<User />} />
-        <Route path="/users/:_id/edit" element={<Editinguser />} />
-        <Route path="/users/add" element={<Addinguser />} />
-        <Route path="/users/:_id/delete" element={<Deletinguser />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/cart/:_id" element={<Cart />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/seating" element={<Seating />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <Login />
+            </>
+          }
+        />
+        <Route
+          path="/menu"
+          element={
+            <>
+              <Header />
+              <Menu />
+            </>
+          }
+        />
+        <Route
+          path="/menu/:_id/edit"
+          element={
+            <>
+              <Header />
+              <Editingitem />
+            </>
+          }
+        />
+        <Route
+          path="/menu/add"
+          element={
+            <>
+              <Header />
+              <Addingitem />
+            </>
+          }
+        />
+        <Route
+          path="/menu/:_id/delete"
+          element={
+            <>
+              <Header />
+              <Deletingitem />
+            </>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <>
+              <Header />
+              <Users />
+            </>
+          }
+        />
+        <Route
+          path="/users/:_id"
+          element={
+            <>
+              <Header />
+              <User />
+            </>
+          }
+        />
+        <Route
+          path="/users/:_id/edit"
+          element={
+            <>
+              <Header />
+              <Editinguser />
+            </>
+          }
+        />
+        <Route
+          path="/users/add"
+          element={
+            <>
+              <Header />
+              <Addinguser />
+            </>
+          }
+        />
+        <Route
+          path="/users/:_id/delete"
+          element={
+            <>
+              <Header />
+              <Deletinguser />
+            </>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <>
+              <Header />
+              <Cart />
+            </>
+          }
+        />
+        <Route
+          path="/cart/:_id"
+          element={
+            <>
+              <Header />
+              <Cart />
+            </>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <>
+              <Header />
+              <Payment />
+            </>
+          }
+        />
+        <Route
+          path="/seating"
+          element={
+            <>
+              <Header />
+              <Seating />
+            </>
+          }
+        />
       </Routes>
       {/* <Footer /> */}
     </div>
