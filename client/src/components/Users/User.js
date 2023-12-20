@@ -9,7 +9,7 @@ const User = () => {
 
     useEffect(() => {
         const getUser = async () => {
-                await axios.get(`http://localhost:5000/api/users/${_id}`)
+                await axios.get(`http://localhost:5001/api/users/${_id}`)
                 .then(res => setUser(res.data.data))
         };
 

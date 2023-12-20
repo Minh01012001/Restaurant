@@ -23,7 +23,7 @@ const Addinguser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/create', {
+      const response = await axios.post('http://localhost:5001/api/users/create', {
         user: {
           user_id: userData.username,
           user_password: userData.password,
@@ -37,7 +37,7 @@ const Addinguser = () => {
       setCreateMessage('User created successfully! Redirecting to users...');
       setTimeout(() => {
         navigate('/users');
-      }, 5000);
+      }, 5001);
     } catch (error) {
       console.error('Error creating user:', error.message);
       setCreateMessage('Error creating user. Please try again.');

@@ -16,7 +16,7 @@ const Editing = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/users/${_id}`);
+        const response = await axios.get(`http://localhost:5001/api/users/${_id}`);
         setUserData(response.data.data);
       } catch (error) {
         console.error('Error fetching user:', error.message);
@@ -35,7 +35,7 @@ const Editing = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:5000/api/users/edit/${_id}`, userData)
+    axios.post(`http://localhost:5001/api/users/edit/${_id}`, userData)
       .then(response => {
         console.log('User data updated successfully:', response.data.data);
       })

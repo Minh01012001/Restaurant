@@ -17,7 +17,7 @@ const Editinguser = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/users/${_id}`);
+        const response = await axios.get(`http://localhost:5001/api/users/${_id}`);
         setUserData(response.data.data);
       } catch (error) {
         console.error('Error fetching user:', error.message);
@@ -37,7 +37,7 @@ const Editinguser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5000/api/users/edit/${_id}`, {
+      const response = await axios.post(`http://localhost:5001/api/users/edit/${_id}`, {
         update: {
           user_id: userData.username,
           user_password: userData.password,
@@ -51,7 +51,7 @@ const Editinguser = () => {
       setUpdateMessage('User updated successfully! Redirecting to users...');
       setTimeout(() => {
         navigate('/users');
-      }, 5000);
+      }, 5001);
     } catch (error) {
       console.error('Error updating user:', error.message);
       setUpdateMessage('Error updating user. Please try again.');

@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import logo from "../img/logo.png";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
+import axios from "axios";
 
 const Header = () => {
-  const { _id } = useParams();
-
+  const tableValue = localStorage.getItem("table");
+  const [lengthCart, lengthSetCart] = useState(0);
+  const getCart = async () => {
+    try {
+      const response = await axios.get("http://localhost:5001/api/carts");
+      lengthSetCart(response.data.data.length);
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
+  };
+  useEffect(() => {
+    getCart();
+  }, []);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -33,8 +45,8 @@ const Header = () => {
             <Link className="btn btn-dark" to="/menu">
               Menu
             </Link>
-            <Link className="btn btn-dark" to={`/cart/${_id}`}>
-              <Badge badgeContent={0} color="primary">
+            <Link className="btn btn-dark" to={`/cart/${tableValue}`}>
+              <Badge badgeContent={lengthCart} color="primary">
                 <ShoppingCartIcon />
               </Badge>
             </Link>

@@ -9,7 +9,7 @@ const Item = () => {
 
     useEffect(() => {
         const getItem = async () => {
-                await axios.get(`http://localhost:5000/api/menu/${name}`)
+                await axios.get(`http://localhost:5001/api/menu/${name}`)
                 .then(res => setItem(res.data.data))
             
         };

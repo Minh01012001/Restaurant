@@ -43,10 +43,11 @@ const Seating = () => {
         {tables.map((table) => <Grid item xs={12} sm={6} md={4} key={table} >
           <Table value={table + 1} onClick={() => {
             setTableSelected(table + 1)
+            localStorage.setItem('table', table + 1);
           }} selected={tableSelected === table + 1} />
         </Grid>)}
       </Grid>
-      <Button variant="contained" mb={10} mt={2} onClick={() => router(`/cart/${tableSelected}`)} disabled={tableSelected == null}>Continue</Button>
+      <Button variant="contained" mb={10} mt={2} onClick={() => router(`/menu`)} disabled={tableSelected == null}>Continue</Button>
       <Box sx={{ height: 50 }}></Box>
     </Container>
   );

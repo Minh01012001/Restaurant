@@ -25,7 +25,7 @@ const Addingitem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/menu/create', {
+      const response = await axios.post('http://localhost:5001/api/menu/create', {
         item: {
           name: itemData.name,
           des: itemData.description,
@@ -41,7 +41,7 @@ const Addingitem = () => {
       setCreateMessage('Item created successfully! Redirecting to menu...');
       setTimeout(() => {
         navigate('/menu');
-      }, 5000);
+      }, 5001);
     } catch (error) {
       console.error('Error creating item:', error.message);
       setCreateMessage('Error creating item. Please try again.');

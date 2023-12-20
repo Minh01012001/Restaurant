@@ -19,7 +19,7 @@ const Deletingitem = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/menu/${_id}`);
+        const response = await axios.get(`http://localhost:5001/api/menu/${_id}`);
         setItemData(response.data.data);
       } catch (error) {
         console.error('Error fetching item:', error.message);
@@ -32,7 +32,7 @@ const Deletingitem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5000/api/menu/delete/${_id}`, {
+      const response = await axios.post(`http://localhost:5001/api/menu/delete/${_id}`, {
         role: {
           role_type: 'admin'
         }
@@ -41,7 +41,7 @@ const Deletingitem = () => {
       setDeleteMessage('Item deleted successfully! Redirecting to menu...');
       setTimeout(() => {
         navigate('/menu');
-      }, 5000);
+      }, 5001);
     } catch (error) {
       console.error('Error deleting item:', error.message);
       setDeleteMessage('Error deleting item. Please try again.');

@@ -19,6 +19,7 @@ const getCart = async (req, res) => {
         
         const item = {
           id: element._id.toString(),
+          menu_id: tmp._id.toString(),
           name: tmp.name,
           description: tmp.des, // Consider renaming this to 'description' or 'description' in your model.
           imageURL: tmp.img,

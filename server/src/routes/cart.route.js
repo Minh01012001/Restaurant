@@ -11,6 +11,6 @@ router.post("/create", controller.createCart);
 
 router.post("/edit/:id", controller.editCart);
 
-router.post("/delete/:id", controller.deleteCart);
+router.delete("/delete/:id", controller.deleteCart);
 
-export default router; 
+export default router;

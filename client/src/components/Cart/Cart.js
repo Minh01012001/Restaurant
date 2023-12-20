@@ -1,54 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  ButtonGroup,
-  Button,
-  IconButton,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Button, IconButton, Box, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
 import { useNavigate } from "react-router-dom";
 
 const Cart = (props) => {
+  const navigate = useNavigate();
   const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
   const [isLoading, setLoading] = useState(false);
-
   const router = useNavigate();
-  const { _id } = useParams();
 
-  const addItem = (id) => {
-    const newCart = cart.map((cart) => {
-      if (cart.id === id) {
-        return { ...cart, quantity: cart.quantity + 1 };
-      }
-      return cart;
+  const addToCart = async (id) => {
+    await axios.post("http://localhost:5001/api/carts/create", {
+      cart: {
+        item_id: id,
+      },
     });
-    setCart(newCart);
+    window.location.reload();
   };
 
-  const subtractItem = (id) => {
-    const newCart = cart.map((cart) => {
-      if (cart.id === id) {
-        if (cart.quantity !== 0) {
-          return { ...cart, quantity: cart.quantity - 1 };
-        }
+  const subtractToCart = async (id) => {
+    await axios.delete(`http://localhost:5001/api/carts/delete/${id}`);
+    window.location.reload();
+  };
+
+  const groupByName = (data) => {
+    const groupedItems = {};
+    data.forEach((item) => {
+      if (!groupedItems[item.name]) {
+        groupedItems[item.name] = { ...item };
+      } else {
+        groupedItems[item.name].quantity += item.quantity;
       }
-      return cart;
     });
-    setCart(newCart);
+    return Object.values(groupedItems);
   };
 
   const getCart = async () => {
-    await axios
-      .get("http://localhost:5000/api/carts")
-      .then((res) => setCart(res.data.data))
-      .catch(() => {
-        console.log("err");
-      });
+    try {
+      const response = await axios.get("http://localhost:5001/api/carts");
+      const cartData = response.data.data;
+      const groupedCart = groupByName(cartData);
+      setCart(groupedCart);
+      const totalValue = groupedCart.reduce((total, item) => {
+        const itemTotal = item.price * item.quantity;
+        return total + itemTotal;
+      }, 0);
+      setTotal(totalValue);
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
   };
 
   useEffect(() => {
@@ -59,10 +64,11 @@ const Cart = (props) => {
   const handlePayment = () => {
     router("/payment");
   };
+  const tableValue = localStorage.getItem("table");
   return (
     <div>
       <div className="mt-4">
-        <h1>CART / {_id}</h1>
+        <h1>CART / TABLE {tableValue}</h1>
       </div>
       <div className="container">
         <table className="table mt-4">
@@ -94,7 +100,8 @@ const Cart = (props) => {
                   style={{
                     borderLeft: "1px solid #dee2e6",
                     verticalAlign: "middle",
-                  }}>
+                  }}
+                >
                   {index + 1}
                 </td>
 
@@ -103,7 +110,8 @@ const Cart = (props) => {
                     textAlign: "left",
                     borderLeft: "1px solid #dee2e6",
                     verticalAlign: "middle",
-                  }}>
+                  }}
+                >
                   {item.name}
                 </td>
 
@@ -111,14 +119,16 @@ const Cart = (props) => {
                   style={{
                     borderLeft: "1px solid #dee2e6",
                     verticalAlign: "middle",
-                  }}>
+                  }}
+                >
                   {item.type}
                 </td>
                 <td
                   style={{
                     borderLeft: "1px solid #dee2e6",
                     verticalAlign: "middle",
-                  }}>
+                  }}
+                >
                   {item.price}
                 </td>
 
@@ -127,7 +137,8 @@ const Cart = (props) => {
                     borderLeft: "1px solid #dee2e6",
                     borderRight: "1px solid #dee2e6",
                     verticalAlign: "middle",
-                  }}>
+                  }}
+                >
                   <Box
                     sx={{
                       display: "flex",
@@ -135,13 +146,15 @@ const Cart = (props) => {
                       justifyContent: "center",
                       alignItems: "center",
                       gap: "16px",
-                    }}>
+                    }}
+                  >
                     <IconButton
                       size="small"
                       aria-label="increase"
                       onClick={() => {
-                        addItem(item.id);
-                      }}>
+                        addToCart(item.menu_id);
+                      }}
+                    >
                       <AddIcon />
                     </IconButton>
                     <Typography sx={{ fontSize: "18px" }}>
@@ -151,8 +164,9 @@ const Cart = (props) => {
                       size="small"
                       aria-label="reduce"
                       onClick={() => {
-                        subtractItem(item.id);
-                      }}>
+                        subtractToCart(item.id);
+                      }}
+                    >
                       <RemoveIcon />
                     </IconButton>
                   </Box>
@@ -161,14 +175,29 @@ const Cart = (props) => {
             ))}
           </tbody>
         </table>
-        <Link to="/payment">
-          <button
-            className="btn btn-success"
-            style={{ marginLeft: "10px" }}
-            onClick={() => handlePayment()}>
-            Payment
-          </button>
-        </Link>
+        <p style={{ backgroundColor: "#fff", color: "#000" }}>
+          Total: {total} (vnd)
+        </p>
+        <div className="d-flex justify-content-center align-items-center mt-4">
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("/menu");
+            }}
+          >
+            Back
+          </Button>
+
+          <Link to="/payment">
+            <button
+              className="btn btn-success"
+              style={{ marginLeft: "10px" }}
+              onClick={() => handlePayment()}
+            >
+              Payment
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

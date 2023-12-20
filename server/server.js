@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import http from "http";
 import cors from "cors";
 
-const port = process.env.NODE_SERVER_PORT || 5000;
+const port = process.env.NODE_SERVER_PORT || 5001;
 const hostname = process.env.NODE_SERVER_IP || "0.0.0.0";
 
 const app = express();
