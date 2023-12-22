@@ -1,27 +1,42 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { updateCartTotalQuantity } from "../../redux/slice/cart";
+import { useSelector } from "react-redux";
 const Menu = () => {
   const [menu, setMenu] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState("all");
-
+  const dispatch = useDispatch();
+  const { lengthCart } = useSelector((state) => {
+    return {
+      lengthCart: state.cart.count,
+    };
+  });
   const getMenu = async () => {
-    await axios
-      .get("http://localhost:5001/api/menu")
-      .then((res) => setMenu(res.data.data));
+    try {
+      await axios
+        .get("http://localhost:5001/api/menu")
+        .then((res) => setMenu(res.data.data));
+    } catch {
+      // window.location.reload();
+    }
   };
 
   const addToCart = async (id) => {
-    await axios.post("http://localhost:5001/api/carts/create", {
-      cart: {
-        item_id: id,
-      },
-    });
-    window.location.reload();
+    try {
+      await axios.post("http://localhost:5001/api/carts/create", {
+        cart: {
+          item_id: id,
+        },
+      });
+      dispatch(updateCartTotalQuantity(lengthCart + 1));
+    } catch {
+      // window.location.reload();
+    }
   };
 
   useEffect(() => {

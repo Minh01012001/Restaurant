@@ -20,12 +20,12 @@ const Cart = (props) => {
         item_id: id,
       },
     });
-    window.location.reload();
+    // window.location.reload();
   };
 
   const subtractToCart = async (id) => {
     await axios.delete(`http://localhost:5001/api/carts/delete/${id}`);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const groupByName = (data) => {

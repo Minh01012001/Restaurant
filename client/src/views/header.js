@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import logo from "../img/logo.png";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import axios from "axios";
-
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import logo from "../img/logo.png";
+import { updateCartTotalQuantity } from "../redux/slice/cart";
 const Header = () => {
   const tableValue = localStorage.getItem("table");
-  const [lengthCart, lengthSetCart] = useState(0);
+  const { lengthCart } = useSelector((state) => {
+    return {
+      lengthCart: state.cart.count,
+    };
+  });
+  const dispatch = useDispatch();
   const getCart = async () => {
     try {
       const response = await axios.get("http://localhost:5001/api/carts");
-      lengthSetCart(response.data.data.length);
+      dispatch(updateCartTotalQuantity(response.data.data.length));
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
@@ -33,7 +39,8 @@ const Header = () => {
             </a>
             <h1
               className="nav-item"
-              style={{ color: "white", fontSize: "30px", margin: 0 }}>
+              style={{ color: "white", fontSize: "30px", margin: 0 }}
+            >
               CMC Restaurant
             </h1>
           </div>
