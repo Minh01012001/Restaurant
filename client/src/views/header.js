@@ -1,8 +1,6 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import logo from "../img/logo.png";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Badge from "@mui/material/Badge";
 
 const Header = () => {
   const { _id } = useParams();
@@ -32,11 +30,6 @@ const Header = () => {
             </Link>
             <Link className="btn btn-dark" to="/menu">
               Menu
-            </Link>
-            <Link className="btn btn-dark" to={`/cart/${_id}`}>
-              <Badge badgeContent={0} color="primary">
-                <ShoppingCartIcon />
-              </Badge>
             </Link>
           </div>
         </div>

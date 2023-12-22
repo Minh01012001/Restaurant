@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
 
 import { useNavigate } from "react-router-dom";
 
@@ -61,8 +63,21 @@ const Cart = (props) => {
   };
   return (
     <div>
-      <div className="mt-4">
+      <div
+        className="mt-4"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "0 100px",
+        }}>
+        <div></div>
         <h1>CART / {_id}</h1>
+        <Link className="btn btn-dark" to={`/cart/${_id}`}>
+          <Badge badgeContent={0} color="primary">
+            <ShoppingCartIcon />
+          </Badge>
+        </Link>
       </div>
       <div className="container">
         <table className="table mt-4">
